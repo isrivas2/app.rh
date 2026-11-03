@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portal de reclutamiento y evaluaciones técnicas y psicométricas para personal de campo y telecomunicaciones.">
+<title>Portal de Reclutamiento y Evaluaciones | Telecomunicaciones</title>
+<style>
+:root {
+  --navy: #10243a;
+  --blue: #0878c9;
+  --cyan: #22c5d8;
+  --ink: #203044;
+  --muted: #64748b;
+  --light: #f2f7fb;
+  --white: #fff;
+  --green: #168653;
+  --red: #c53d49;
+  --line: #dce6ee;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--light);
+  line-height: 1.55;
+}
+.header-bar {
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.header-bar .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--cyan);
+}
+.stepper {
+  display: flex;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.step-pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.12);
+  color: #a5c0d6;
+}
+.step-pill.active {
+  background: var(--cyan);
+  color: var(--navy);
+}
+.step-pill.completed {
+  background: var(--green);
+  color: #fff;
+}
+
+.hero {
+  color: var(--white);
+  padding: 48px 20px 54px;
+  text-align: center;
+  background: radial-gradient(circle at 85% 15%, rgba(34,197,216,.28), transparent 28%), linear-gradient(135deg, #10243a 0%, #075b9e 58%, #0878c9 100%);
+}
+.wrap { width: min(940px, calc(100% - 32px)); margin: 0 auto; }
+.eyebrow {
+  display: inline-block;
+  padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,.38);
+  border-radius: 30px;
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 18px 0 10px;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -.04em;
+}
+.hero p {
+  max-width: 700px;
+  margin: 12px auto 0;
+  color: #e5f4ff;
+  font-size: 1.08rem;
+}
+.pay {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 11px 20px;
+  border-radius: 10px;
+  background: #fff;
+  color: #075b9e;
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  font-weight: 800;
+  box-shadow: 0 10px 28px rgba(0,0,0,.18);
+}
+main { padding: 30px 0 54px; }
+.intro { text-align: center; max-width: 760px; margin: 0 auto 24px; color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.card {
+  background: var(--white);
+  border: 1px solid #e2eaf1;
+  border-radius: 16px;
+  padding: 23px;
+  box-shadow: 0 8px 24px rgba(16,36,58,.06);
+  margin-bottom: 18px;
+}
+.card h2 { margin: 0 0 15px; color: var(--navy); font-size: 1.28rem; }
+.role { display: flex; align-items: flex-start; gap: 12px; margin: 13px 0; font-weight: 700; }
+.check {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 25px;
+  height: 25px;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--blue);
+  font-size: .9rem;
+}
+ul { margin: 0; padding-left: 21px; }
+li { margin: 10px 0; }
+.benefits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 18px; }
+.benefit { padding: 15px 14px; border-radius: 12px; background: #eaf6fc; color: #075b9e; font-weight: 700; }
+.benefit strong { display: block; margin-bottom: 4px; color: var(--navy); font-size: 1rem; }
+.modality { border: 1px solid #d9e8f2; border-radius: 12px; padding: 16px; background: #f8fbfd; margin-top: 12px; }
+.modality h3 { margin: 0 0 6px; color: var(--navy); }
+.amount { color: var(--blue); font-size: 1.35rem; font-weight: 800; }
+.location { margin: 20px 0 0; text-align: center; color: var(--muted); font-weight: 700; }
+
+.notice { border-left: 4px solid var(--cyan); background: #eaf6fc; padding: 13px 16px; border-radius: 8px; color: #24506a; font-size: .94rem; margin-bottom: 18px; }
+.notice.warning { border-left-color: #f59e0b; background: #fffbeb; color: #92400e; }
+.notice.danger { border-left-color: var(--red); background: #fef2f2; color: #991b1b; }
+
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+.field label { display: block; font-weight: 800; color: var(--navy); margin-bottom: 7px; font-size: 0.92rem; }
+.field input, .field select { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 9px; font: inherit; color: var(--ink); background: #fff; }
+.field input:focus, .field select:focus { outline: 2px solid var(--cyan); border-color: var(--blue); }
+
+.topline { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin: 18px 0 10px; color: var(--muted); font-size: .9rem; font-weight: 700; }
+.progress { height: 8px; background: #e7eef4; border-radius: 20px; overflow: hidden; margin-bottom: 18px; }
+.progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width .2s; }
+
+.question { padding: 18px 0; border-top: 1px solid #e8eef3; }
+.question:first-of-type { border-top: 0; }
+.qtitle { font-weight: 750; color: var(--navy); margin: 0 0 12px; font-size: 1rem; }
+.qtype { font-size: .76rem; color: var(--blue); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+
+.options { display: grid; gap: 9px; }
+.option { display: flex; gap: 11px; align-items: flex-start; padding: 12px 13px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer; transition: border .15s, background .15s; }
+.option:hover { border-color: var(--blue); background: #f7fbfe; }
+.option input { margin-top: 4px; accent-color: var(--blue); transform: scale(1.08); }
+.option span { flex: 1; }
+.option.correct { border-color: var(--green); background: #effaf4; }
+.option.incorrect { border-color: var(--red); background: #fff3f3; }
+
+.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.choice { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 5px; padding: 10px 5px; border: 1px solid var(--line); border-radius: 9px; cursor: pointer; font-size: .82rem; min-height: 66px; }
+.choice:hover { border-color: var(--blue); background: #f7fbfe; }
+.choice input { accent-color: var(--blue); transform: scale(1.15); }
+.choice:has(input:checked) { border-color: var(--blue); background: #eaf6fc; color: var(--navy); font-weight: 700; }
+
+.feedback { display: none; margin-top: 12px; padding: 12px 14px; border-radius: 9px; background: #f2f7fb; font-size: .9rem; }
+.feedback.show { display: block; }
+.feedback p { margin: 4px 0; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 22px; }
+button, .button-link { border: 0; border-radius: 9px; padding: 13px 20px; font-weight: 800; font-size: .95rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; transition: transform .15s, filter .15s; }
+button:hover, .button-link:hover { transform: translateY(-1px); }
+.primary { background: var(--cyan); color: #08243a; }
+.secondary { background: #e8eef4; color: var(--navy); }
+.success { background: var(--green); color: #fff; }
+button:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+
+.score { font-size: 2.5rem; font-weight: 900; color: var(--blue); line-height: 1.1; }
+.resultgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0; }
+.metric { background: #f1f7fb; padding: 15px; border-radius: 11px; }
+.metric strong { display: block; color: var(--navy); font-size: 1.08rem; margin-bottom: 7px; }
+.metric-center { text-align: center; }
+.metric-center strong { font-size: 1.35rem; }
+.bar { height: 9px; background: #dfeaf1; border-radius: 20px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+.metric small { display: block; color: var(--muted); margin-top: 7px; }
+
+.view-section { display: none; }
+.view-section.active { display: block; }
+
+footer { text-align: center; color: #7b8998; font-size: .84rem; padding: 25px 20px; }
+
+@media(max-width: 650px) {
+  .grid, .fields, .resultgrid, .benefits { grid-template-columns: 1fr; }
+  .card { padding: 18px; }
+  .hero { padding-top: 36px; }
+  .scale { gap: 5px; }
+  .choice { font-size: .72rem; padding: 8px 2px; min-height: 72px; }
+  .stepper span:not(.active) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="header-bar">
+  <div class="wrap">
+    <div class="logo">FILIAL Telecomunicaciones</div>
+    <div class="stepper">
+      <span class="step-pill active" id="pill-vacante">1. Vacante</span>
+      <span class="step-pill" id="pill-tecnico">2. Evaluación Técnica</span>
+      <span class="step-pill" id="pill-psico">3. Perfil Laboral</span>
+      <span class="step-pill" id="pill-final">4. Finalizar</span>
+    </div>
+  </div>
+</header>
+
+<!-- SECCIÓN 1: VACANTE DE EMPLEO -->
+<div id="view-vacante" class="view-section active">
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Oportunidad laboral</span>
+      <h1>¡Estamos contratando!</h1>
+      <p>Forma parte de nuestro equipo en el área de instalaciones y construcción de infraestructura de telecomunicaciones.</p>
+      <div class="pay">Sueldo base <span>+</span> comisiones</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="intro">Buscamos personas responsables y comprometidas, con experiencia en trabajo de campo y redes de telecomunicaciones.</p>
+    
+    <section class="grid">
+      <article class="card">
+        <h2>🔧 Vacantes</h2>
+        <div class="role"><span class="check">✓</span><span>Técnicos de última milla</span></div>
+        <div class="role"><span class="check">✓</span><span>Técnicos para construcción de red exterior</span></div>
+      </article>
+
+      <article class="card">
+        <h2>📋 Requisitos generales</h2>
+        <ul>
+          <li>Experiencia probada en telecomunicaciones/redes.</li>
+          <li>Licencia de conducir vigente tipo B.</li>
+          <li>Constancia DC-3 (Trabajos en Alturas / Riesgo Eléctrico) o disposición para certificarse.</li>
+          <li>Disponibilidad para trabajo en campo y movilidad local.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>💰 Esquemas de pago</h2>
+      <p>Contamos con dos modalidades de pago para que puedas elegir la que mejor se adapte a ti:</p>
+      <div class="modality">
+        <h3>Modalidad 1 · Por destajo</h3>
+        <div class="amount">$300 MXN</div>
+        <div>Por cada instalación realizada.</div>
+      </div>
+      <div class="modality">
+        <h3>Modalidad 2 · Sueldo base + comisiones</h3>
+        <div class="amount">$1,500 MXN</div>
+        <div>Sueldo semanal base más comisiones a partir de la sexta instalación.</div>
+      </div>
+      
+      <h2 style="margin-top:24px">🎁 Prestaciones y herramientas de trabajo</h2>
+      <div class="benefits">
+        <div class="benefit"><strong>IMSS</strong>Seguridad social completa desde el primer día.</div>
+        <div class="benefit"><strong>Prestaciones de ley</strong>Aguinaldo, vacaciones y prima vacacional.</div>
+        <div class="benefit"><strong>Uniformes</strong>Equipo de protección y uniformes de trabajo.</div>
+        <div class="benefit"><strong>Vehículo y Gasolina</strong>Unidad asignada y combustible cubierto para actividades.</div>
+      </div>
+      <p class="location">📍 Zona de trabajo: San Luis Potosí y áreas conurbadas</p>
+    </section>
+
+    <section class="card" style="text-align: center; padding: 34px 22px;">
+      <h2>¿Listo para postularte?</h2>
+      <p style="color: var(--muted); max-width: 600px; margin: 0 auto 20px;">El proceso consta de dos evaluaciones en línea rápidas (Técnica y Perfil de Hábitos) para validar tu perfil antes de agendar entrevista presencial.</p>
+      <button class="primary" type="button" onclick="goToStep('tecnico')" style="font-size: 1.1rem; padding: 15px 30px;">
+        Iniciar postulación y evaluaciones →
+      </button>
+    </section>
+  </main>
+</div>
+
+<!-- SECCIÓN 2: EVALUACIÓN TÉCNICA -->
+<div id="view-tecnico" class="view-section">
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Fase 1 · Evaluación Técnica</span>
+      <h1>Fibra óptica:<br>última milla y construcción</h1>
+      <p>Comprueba tus conocimientos para trabajos de instalación, mantenimiento y construcción de redes de planta externa.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <div class="notice">
+        <strong>Instrucciones:</strong> Ingresa tus datos obligatorios. Responde las 10 preguntas conceptuales basadas en estándares FOA. Para aprobar y avanzar a la siguiente etapa necesitas al menos un <strong>70% de aciertos</strong>.
+      </div>
+      
+      <div class="fields">
+        <div class="field">
+          <label for="c_name">Nombre completo *</label>
+          <input id="c_name" type="text" placeholder="Ej. Juan Pérez González" required>
+        </div>
+        <div class="field">
+          <label for="c_phone">Teléfono / WhatsApp *</label>
+          <input id="c_phone" type="tel" placeholder="10 dígitos" required>
+        </div>
+      </div>
+      
+      <div class="topline">
+        <span id="quizProgressText">0 de 10 respondidas</span>
+        <span>Progreso de evaluación</span>
+      </div>
+      <div class="progress"><span id="quizProgressBar"></span></div>
+
+      <form id="quizForm"></form>
+
+      <div class="actions">
+        <button class="primary" id="finishQuizBtn" type="button">Calificar evaluación técnica</button>
+        <button class="secondary" id="resetQuizBtn" type="button">Limpiar respuestas</button>
+      </div>
+      <p class="small" id="quizStatus" aria-live="polite">Responde todas las preguntas para calificar.</p>
+    </div>
+
+    <!-- Resultado Técnico -->
+    <section class="card" id="quizResult" style="display:none;" aria-live="polite">
+      <h2 style="margin-top:0;color:var(--navy)">Resultado de Evaluación Técnica</h2>
+      <div class="score" id="scoreText">0/10</div>
+      <p id="resultMessage" style="font-weight:700; font-size:1.05rem;"></p>
+      
+      <div class="resultgrid">
+        <div class="metric metric-center"><strong id="correctCount">0</strong><span class="small">Correctas</span></div>
+        <div class="metric metric-center"><strong id="wrongCount">0</strong><span class="small">Incorrectas</span></div>
+        <div class="metric metric-center"><strong id="percentCount">0%</strong><span class="small">Calificación</span></div>
+      </div>
+
+      <div id="quizPassNotice" class="notice" style="display:none;">
+        <strong>¡Felicidades!</strong> Has obtenido la calificación mínima requerida. Haz clic en el botón siguiente para completar la evaluación de perfil laboral.
+      </div>
+
+      <div id="quizFailNotice" class="notice danger" style="display:none;">
+        <strong>Resultado Insuficiente:</strong> No se alcanzó el porcentaje técnico mínimo (70%). Puedes repasar los temas o reiniciar el formulario si tuviste un error involuntario.
+      </div>
+
+      <div class="actions">
+        <button class="success" id="nextToPsicoBtn" type="button" style="display:none;" onclick="goToStep('psico')">
+          Avanzar al Cuestionario de Perfil Laboral →
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- SECCIÓN 3: EVALUACIÓN PSICOMÉTRICA / HÁBITOS -->
+<div id="view-psico" class="view-section">
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Fase 2 · Perfil Laboral</span>
+      <h1>Hábitos, liderazgo,<br>compromiso y responsabilidad</h1>
+      <p>Cuestionario de conductas y criterios de trabajo para puestos operativos, instalaciones y construcción de redes.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <div class="notice">
+        <strong>Instrucciones:</strong> Responde pensando en cómo actúas habitualmente en el trabajo real. Selecciona una respuesta por afirmación. No hay respuestas correctas o incorrectas.
+      </div>
+      
+      <div class="fields">
+        <div class="field">
+          <label for="position">Puesto al que aspiras</label>
+          <select id="position">
+            <option value="Técnico de última milla">Técnico de última milla</option>
+            <option value="Técnico de construcción de red exterior">Técnico de construcción de red exterior</option>
+            <option value="Otro puesto operativo">Otro puesto operativo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dc3_status">¿Cuentas con DC-3 en Alturas/Riesgo Eléctrico?</label>
+          <select id="dc3_status">
+            <option value="Sí, vigentes">Sí, cuento con las constancias vigentes</option>
+            <option value="En trámite / Vencidas">En trámite / Vencidas</option>
+            <option value="No cuento con ellas">No cuento con ellas (requiero apoyo)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="topline">
+        <span id="psicoProgressText">0 de 32 respondidas</span>
+        <span>Avance del cuestionario</span>
+      </div>
+      <div class="progress"><span id="psicoProgressBar"></span></div>
+
+      <form id="psicoForm"></form>
+
+      <div class="actions">
+        <button class="primary" type="button" id="finishPsicoBtn">Generar Diagnóstico Integrado</button>
+      </div>
+      <p class="small" id="psicoStatus" aria-live="polite">Debes responder todos los reactivos antes de finalizar.</p>
+    </div>
+
+    <!-- Resultado Psicométrico / Final -->
+    <section class="card" id="psicoResult" style="display:none;" aria-live="polite">
+      <h2 style="margin-top:0;color:var(--navy)">Resumen Final del Candidato</h2>
+      
+      <div class="fields" style="background:#f7f9fb; padding:15px; border-radius:10px;">
+        <div><strong>Candidato:</strong> <span id="res_name">-</span></div>
+        <div><strong>Teléfono:</strong> <span id="res_phone">-</span></div>
+        <div><strong>Puesto:</strong> <span id="res_pos">-</span></div>
+        <div><strong>Prueba Técnica:</strong> <span id="res_tech">-</span></div>
+      </div>
+
+      <h3 style="color:var(--navy); margin-top:20px;">Evaluación de Perfil de Conducta</h3>
+      <div class="overall" id="overall" style="font-size:2.2rem; font-weight:900; color:var(--blue);">—</div>
+      <p id="summary"></p>
+
+      <div class="metric-grid" id="metrics" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; margin:20px 0;"></div>
+
+      <div class="notice">
+        <strong>Siguiente paso obligatorio:</strong> Envía el expediente completo formateado por WhatsApp para que RH programe tu entrevista presencial.
+      </div>
+
+      <div class="actions">
+        <button class="success" type="button" id="shareWhatsAppBtn" style="font-size:1.05rem;">
+          📱 Enviar Expediente de Postulación por WhatsApp
+        </button>
+        <button class="secondary" type="button" onclick="window.print()">🖨️ Imprimir Reporte</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>FILIAL Telecomunicaciones · Sistema Integrado de Reclutamiento &copy; 2026</footer>
+
+<script>
+// ESTADO GLOBAL DE POSTULACIÓN
+const candidateData = {
+  name: "",
+  phone: "",
+  position: "",
+  dc3: "",
+  techScore: 0,
+  techPct: 0,
+  techPassed: false,
+  techDetails: [],
+  psicoScores: {},
+  psicoOverall: 0,
+  psicoAlerts: [],
+  psicoConcern: false
+};
+
+// NAVEGACIÓN ENTRE VISTAS
+function goToStep(step) {
+  if (step === 'tecnico' || step === 'psico') {
+    const name = document.getElementById('c_name').value.trim();
+    const phone = document.getElementById('c_phone').value.trim();
+    if (step === 'psico' && (!candidateData.techPassed)) {
+      alert("Debes completar y aprobar la prueba técnica con al menos 70% para continuar.");
+      return;
+    }
+    if (step === 'tecnico' && (!name || !phone)) {
+      if (document.getElementById('view-tecnico').classList.contains('active')) {
+        // Ya está en técnico, validar datos
+      }
+    }
+  }
+
+  document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.step-pill').forEach(el => el.classList.remove('active'));
+
+  if (step === 'vacante') {
+    document.getElementById('view-vacante').classList.add('active');
+    document.getElementById('pill-vacante').classList.add('active');
+  } else if (step === 'tecnico') {
+    document.getElementById('view-tecnico').classList.add('active');
+    document.getElementById('pill-vacante').classList.add('completed');
+    document.getElementById('pill-tecnico').classList.add('active');
+  } else if (step === 'psico') {
+    document.getElementById('view-psico').classList.add('active');
+    document.getElementById('pill-vacante').classList.add('completed');
+    document.getElementById('pill-tecnico').classList.add('completed');
+    document.getElementById('pill-psico').classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// -------------------------------------------------------------
+// LOGICA EVALUACIÓN TÉCNICA (FOA)
+// -------------------------------------------------------------
+const techQuestions = [
+ {type:"Opción única",multi:false,q:"En una red de planta externa (OSP), ¿cuál de las siguientes opciones describe correctamente una modalidad de instalación reconocida por la FOA?",opts:["Tendido aéreo sobre postes","Cableado exclusivo dentro de edificios","Conexión inalámbrica entre antenas","Distribución mediante cable coaxial"],a:[0],fb:["El tendido aéreo es una modalidad de planta externa en la que el cable se instala sobre postes.","El cableado dentro de edificios corresponde a instalaciones en predios; no describe una modalidad de OSP.","Una conexión inalámbrica no constituye una instalación de cable de fibra óptica OSP.","El coaxial no es una modalidad de instalación de cable de fibra óptica."]},
+ {type:"Opción única",multi:false,q:"Durante la construcción de una red exterior se requiere instalar cable ADSS. ¿Qué característica identifica a este tipo de cable?",opts:["Utiliza un mensajero metálico independiente para soportarse","Es completamente dieléctrico y autosoportado","Necesita una canalización subterránea para sostenerse","Está diseñado exclusivamente para instalaciones interiores"],a:[1],fb:["El mensajero independiente corresponde a otras configuraciones de cable aéreo, no define al ADSS.","ADSS significa All-Dielectric Self-Supporting: cable completamente dieléctrico y autosoportado.","La canalización subterránea no es una característica definitoria del ADSS.","El ADSS se utiliza principalmente en instalaciones aéreas de planta externa."]},
+ {type:"Opción única",multi:false,q:"En un punto de empalme de una red exterior se necesita unir permanentemente dos fibras ópticas para continuar el enlace. ¿Qué procedimiento corresponde a un empalme por fusión?",opts:["Alinear las fibras mediante un dispositivo mecánico sin fusionarlas","Unir las fibras mediante un conector SC","Fusionar las fibras mediante un arco eléctrico","Unir las cubiertas exteriores con cinta aislante"],a:[2],fb:["Ese procedimiento corresponde a un empalme mecánico.","El conector SC permite una conexión desmontable; no constituye un empalme por fusión.","La fusionadora utiliza normalmente un arco eléctrico para unir permanentemente los extremos de las fibras.","Unir las cubiertas no produce continuidad óptica entre los núcleos de las fibras."]},
+ {type:"Opción única",multi:false,q:"¿Cuál es la diferencia funcional principal entre un conector de fibra óptica y un empalme permanente?",opts:["El conector permite una conexión desmontable y el empalme une permanentemente las fibras","El conector se utiliza únicamente en exteriores y el empalme en interiores","El conector siempre tiene menos pérdida que cualquier empalme","El empalme permite desconectar las fibras sin herramientas"],a:[0],fb:["El conector permite conectar y desconectar fibras; el empalme está diseñado para unirlas permanentemente.","Ambos pueden utilizarse en diferentes aplicaciones según el diseño de la red.","No existe esa regla universal; el rendimiento depende de la calidad de los componentes y del trabajo.","Un empalme permanente no está diseñado para desconexiones rutinarias."]},
+ {type:"Opción única",multi:false,q:"Al terminar una instalación de fibra óptica, necesitas medir la pérdida total de inserción de extremo a extremo. ¿Qué equipo o conjunto de prueba corresponde utilizar?",opts:["Un OTDR utilizado como único medidor de pérdida total","Una fuente de luz y un medidor de potencia óptica","Un multímetro digital convencional","Un localizador visual de fallas como único instrumento"],a:[1],fb:["El OTDR permite analizar eventos y características del enlace, pero no debe utilizarse por sí solo para determinar la pérdida total de inserción.","La fuente de luz y el medidor de potencia permiten realizar la medición de pérdida de inserción de extremo a extremo.","Un multímetro convencional mide magnitudes eléctricas, no la pérdida de inserción óptica.","El localizador visual ayuda a identificar continuidad o fallas visibles, pero no mide la pérdida total de inserción."]},
+ {type:"Opción única",multi:false,q:"Antes de comenzar una construcción de red exterior, el equipo llega al sitio y detecta que no se ha confirmado la existencia de permisos para intervenir la ruta. ¿Qué debe hacerse conforme a una planificación adecuada?",opts:["Comenzar el tendido y solicitar los permisos al terminar","Iniciar únicamente con el tramo que parezca más sencillo","Verificar y obtener las autorizaciones necesarias antes de iniciar","Dejar la decisión exclusivamente al técnico de empalmes"],a:[2],fb:["Los permisos deben estar disponibles para inspección antes de comenzar los trabajos correspondientes.","La facilidad del tramo no sustituye la autorización ni la planificación previa.","La planificación contempla la selección de ruta y la obtención de permisos antes de la instalación.","La gestión de permisos forma parte de la planificación y coordinación del proyecto, no es responsabilidad exclusiva del fusionador."]},
+ {type:"Opción única",multi:false,q:"Durante una instalación aérea, ¿cuál es una práctica importante para asegurar la calidad del tendido de cable de fibra óptica?",opts:["Aplicar tensión sin controlar las condiciones de instalación","Respetar las especificaciones de instalación y revisar el trabajo durante el tendido","Eliminar todas las reservas de cable para reducir el peso","Permitir que el cable roce libremente con estructuras y aristas"],a:[1],fb:["La tensión debe controlarse de acuerdo con las especificaciones del fabricante y el método de tendido.","La inspección del trabajo y el cumplimiento de las especificaciones ayudan a evitar daños al cable y defectos de instalación.","Las reservas deben planificarse y conservarse donde el diseño las requiera para mantenimiento y futuras intervenciones.","El roce y los puntos de contacto inadecuados pueden dañar la cubierta y comprometer el cable."]},
+ {type:"Selección múltiple",multi:true,q:"De acuerdo con la lista de verificación de instalación de la FOA, ¿cuáles de las siguientes actividades corresponden a la preparación previa de un proyecto de fibra óptica? Selecciona todas las correctas.",opts:["Definir la ruta del enlace y obtener los permisos necesarios","Completar el plan de pruebas antes de instalar","Revisar las reglas de seguridad con el personal contratista","Esperar a terminar la obra para elegir los componentes de red"],a:[0,1,2],fb:["La selección de la ruta y la obtención de permisos forman parte de la preparación previa.","La FOA incluye completar y revisar el plan de pruebas antes de comenzar los trabajos.","La revisión de las reglas de seguridad con el contratista forma parte de la preparación.","La selección de componentes y proveedores debe realizarse durante la planificación, no después de la instalación."]},
+ {type:"Verdadero o falso",tf:true,a:[0],q:"La FOA reconoce el tendido aéreo, el tendido subterráneo en conductos, el enterramiento directo y el tendido submarino como categorías de instalación de planta externa.",fb:["La clasificación de planta externa de la FOA contempla esas modalidades de colocación de cable.","La afirmación coincide con las categorías de instalación OSP descritas por la FOA."]},
+ {type:"Verdadero o falso",tf:true,a:[1],q:"Un OTDR debe utilizarse como instrumento único para determinar la pérdida total de extremo a extremo de un enlace de fibra óptica instalado.",fb:["El OTDR no debe utilizarse para determinar por sí solo la pérdida total de inserción; para esa medición se utiliza un OLTS o una fuente de luz y un medidor de potencia.","La afirmación es incorrecta: el OTDR analiza eventos y características del enlace, mientras que la pérdida de inserción de extremo a extremo se mide con OLTS."]}
+];
+
+const quizForm = document.getElementById("quizForm");
+let quizGraded = false;
+
+function renderQuiz() {
+  quizForm.innerHTML = "";
+  techQuestions.forEach((q, i) => {
+    const sec = document.createElement("section"); sec.className = "question"; sec.dataset.index = i;
+    const type = document.createElement("div"); type.className = "qtype"; type.textContent = `Pregunta ${i+1} · ${q.type}`;
+    const title = document.createElement("p"); title.className = "qtitle"; title.textContent = q.q;
+    const options = document.createElement("div"); options.className = "options";
+    
+    if (q.tf) {
+      ["Verdadero", "Falso"].forEach((opt, j) => {
+        const lab = document.createElement("label"); lab.className = "option";
+        const inp = document.createElement("input"); inp.type = "radio"; inp.name = "tq" + i; inp.value = j;
+        inp.addEventListener("change", updateQuizProgress);
+        const sp = document.createElement("span"); sp.textContent = opt;
+        lab.append(inp, sp); options.append(lab);
+      });
+    } else {
+      q.opts.forEach((opt, j) => {
+        const lab = document.createElement("label"); lab.className = "option";
+        const inp = document.createElement("input"); inp.type = q.multi ? "checkbox" : "radio"; inp.name = "tq" + i; inp.value = j;
+        inp.addEventListener("change", updateQuizProgress);
+        const sp = document.createElement("span"); sp.textContent = String.fromCharCode(65+j) + ". " + opt;
+        lab.append(inp, sp); options.append(lab);
+      });
+    }
+
+    const fb = document.createElement("div"); fb.className = "feedback"; fb.id = "tfb" + i;
+    sec.append(type, title, options, fb); quizForm.append(sec);
+  });
+  updateQuizProgress();
+}
+
+function getSelectedTech(i) {
+  return [...quizForm.querySelectorAll(`[name="tq${i}"]:checked`)].map(x => Number(x.value));
+}
+
+function updateQuizProgress() {
+  let count = 0;
+  techQuestions.forEach((q, i) => { if (getSelectedTech(i).length) count++; });
+  document.getElementById("quizProgressText").textContent = `${count} de ${techQuestions.length} respondidas`;
+  document.getElementById("quizProgressBar").style.width = (count / techQuestions.length * 100) + "%";
+  document.getElementById("quizStatus").textContent = count === techQuestions.length ? "¡Preguntas completadas! Haz clic en calificar." : `Faltan ${techQuestions.length - count} pregunta(s) por responder.`;
+}
+
+document.getElementById("finishQuizBtn").addEventListener("click", () => {
+  if (quizGraded) return;
+  const name = document.getElementById("c_name").value.trim();
+  const phone = document.getElementById("c_phone").value.trim();
+  
+  if (!name || !phone) {
+    alert("Por favor ingresa tu nombre completo y teléfono antes de calificar.");
+    document.getElementById("c_name").focus();
+    return;
+  }
+  
+  const unanswered = techQuestions.map((q, i) => i).filter(i => getSelectedTech(i).length === 0);
+  if (unanswered.length) {
+    alert(`Debes responder todas las preguntas. Faltan las preguntas: ${unanswered.map(i => i + 1).join(", ")}`);
+    return;
+  }
+
+  let score = 0;
+  candidateData.techDetails = [];
+
+  techQuestions.forEach((q, i) => {
+    const chosen = getSelectedTech(i).sort((a, b) => a - b);
+    const correct = chosen.length === q.a.length && chosen.every((v, k) => v === q.a[k]);
+    if (correct) score++;
+    
+    candidateData.techDetails.push({
+      q: q.q,
+      isCorrect: correct
+    });
+
+    const sec = quizForm.querySelector(`[data-index="${i}"]`);
+    const labels = [...sec.querySelectorAll(".option")];
+    labels.forEach((lab, j) => {
+      const input = lab.querySelector("input");
+      if (q.a.includes(j)) lab.classList.add("correct");
+      else if (input.checked) lab.classList.add("incorrect");
+      input.disabled = true;
+    });
+
+    const fb = document.getElementById("tfb" + i); fb.classList.add("show");
+    if (q.tf) {
+      fb.innerHTML = `<strong>${correct ? "Respuesta correcta." : "Respuesta incorrecta."}</strong><p>${q.fb[chosen[0]]}</p>`;
+    } else {
+      fb.innerHTML = `<strong>${correct ? "Respuesta correcta." : "Respuesta incorrecta."}</strong>`;
+      q.opts.forEach((_, j) => { const p = document.createElement("p"); p.textContent = String.fromCharCode(65+j) + ". " + q.fb[j]; fb.append(p); });
+    }
+  });
+
+  quizGraded = true;
+  const pct = Math.round(score / techQuestions.length * 100);
+  const passed = pct >= 70;
+
+  candidateData.name = name;
+  candidateData.phone = phone;
+  candidateData.techScore = score;
+  candidateData.techPct = pct;
+  candidateData.techPassed = passed;
+
+  document.getElementById("scoreText").textContent = `${score}/${techQuestions.length}`;
+  document.getElementById("correctCount").textContent = score;
+  document.getElementById("wrongCount").textContent = techQuestions.length - score;
+  document.getElementById("percentCount").textContent = pct + "%";
+  
+  const msgEl = document.getElementById("resultMessage");
+  msgEl.textContent = passed 
+    ? "Aprobado: Has demostrado el nivel técnico mínimo para operaciones de campo." 
+    : "No Aprobado: Se requiere un mínimo de 70% de aciertos técnicos.";
+  msgEl.style.color = passed ? "var(--green)" : "var(--red)";
+
+  document.getElementById("quizResult").style.display = "block";
+  document.getElementById("finishQuizBtn").disabled = true;
+
+  if (passed) {
+    document.getElementById("quizPassNotice").style.display = "block";
+    document.getElementById("quizFailNotice").style.display = "none";
+    document.getElementById("nextToPsicoBtn").style.display = "inline-flex";
+  } else {
+    document.getElementById("quizPassNotice").style.display = "none";
+    document.getElementById("quizFailNotice").style.display = "block";
+    document.getElementById("nextToPsicoBtn").style.display = "none";
+  }
+
+  document.getElementById("quizResult").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+document.getElementById("resetQuizBtn").addEventListener("click", () => {
+  if (!confirm("¿Deseas reiniciar la evaluación técnica?")) return;
+  quizGraded = false;
+  renderQuiz();
+  document.getElementById("quizResult").style.display = "none";
+  document.getElementById("finishQuizBtn").disabled = false;
+});
+
+
+// -------------------------------------------------------------
+// LOGICA EVALUACIÓN PSICOMÉTRICA DE HÁBITOS
+// -------------------------------------------------------------
+const psicoScale = [["Nunca","1"],["Rara vez","2"],["A veces","3"],["Casi siempre","4"],["Siempre","5"]];
+const psicoGroups = [
+{key:"habitos",title:"1. Hábitos y costumbres laborales",desc:"Organización personal, puntualidad, orden y constancia.",items:[
+["Llego a tiempo al punto de reunión o al sitio de trabajo."],
+["Antes de salir a campo reviso que llevo herramientas, materiales y equipo necesarios."],
+["Mantengo ordenadas mis herramientas y el área donde estoy trabajando."],
+["Si termino una actividad, busco qué sigue o consulto al responsable."],
+["Me cuesta mantener una rutina de trabajo y seguir un horario establecido.",true],
+["Aunque nadie me supervise, procuro mantener el mismo ritmo y calidad de trabajo."],
+["Con frecuencia llego tarde al punto de reunión o al sitio de trabajo.",true],
+["Salgo a campo sin revisar si llevo herramientas, materiales y equipo necesarios.",true]
+]},
+{key:"liderazgo",title:"2. Liderazgo y trabajo en equipo",desc:"Comunicación, iniciativa, colaboración y manejo de desacuerdos.",items:[
+["Cuando el equipo tiene dudas, propongo una forma de organizarnos para avanzar."],
+["Escucho las opiniones de mis compañeros antes de tomar una decisión que les afecta."],
+["Si observo que un compañero está en riesgo, intervengo o aviso."],
+["Cuando hay un desacuerdo, puedo hablarlo sin insultar ni imponerme."],
+["Prefiero que alguien más resuelva los problemas del equipo, aunque yo pueda ayudar.",true],
+["Puedo recibir instrucciones y también coordinar a otros cuando el trabajo lo requiere."],
+["Cuando recibo una observación sobre mi trabajo, suelo tomarla como algo personal.",true],
+["Comparto información importante con el equipo para evitar errores o retrabajos."]
+]},
+{key:"compromiso",title:"3. Compromiso y disposición",desc:"Perseverancia, calidad, aprendizaje y cumplimiento de objetivos.",items:[
+["Si una actividad se complica, busco alternativas antes de darla por perdida."],
+["Me interesa aprender procedimientos y técnicas nuevas para mejorar mi trabajo."],
+["Cumplo los acuerdos de trabajo aunque la supervisión no esté presente."],
+["Cuando cometo un error, lo informo para corregirlo y evitar que se repita."],
+["Si una tarea no me gusta, suelo dejarla para que otra persona la termine.",true],
+["Me esfuerzo por entregar el trabajo completo y con buena calidad."],
+["A veces doy por terminada una actividad aunque sé que todavía necesita revisión.",true],
+["Si no alcanzo una meta, reviso qué puedo cambiar para mejorar el siguiente resultado."]
+]},
+{key:"responsabilidad",title:"4. Responsabilidad y criterio",desc:"Seguridad, honestidad, cuidado de recursos y toma de decisiones.",items:[
+["Si no entiendo una instrucción que puede afectar la seguridad o la calidad, pregunto antes de actuar."],
+["Reporto daños, pérdidas, fallas o incidentes aunque puedan ocasionarme una llamada de atención."],
+["Utilizo correctamente el vehículo, herramientas, materiales y recursos que me asignan."],
+["Si voy retrasado, aviso oportunamente y explico la situación."],
+["Aceptaría omitir un procedimiento de seguridad para terminar más rápido si nadie está mirando.",true],
+["Reconozco cuando una tarea supera mi capacitación y solicito apoyo."],
+["Cuando cometo un error, suelo esperar a que alguien lo note antes de decirlo.",true],
+["Antes de iniciar un trabajo de riesgo, verifico condiciones, equipo de protección y procedimiento."]
+]}
+];
+
+const psicoForm = document.getElementById("psicoForm");
+let psicoQuestionCount = 0;
+
+function renderPsico() {
+  psicoForm.innerHTML = "";
+  psicoQuestionCount = 0;
+  psicoGroups.forEach(g => {
+    const heading = document.createElement("h3"); heading.style.cssText = "margin:24px 0 4px; border-bottom:2px solid #e8f1f7; color:var(--navy); padding-bottom:6px;"; heading.textContent = g.title; psicoForm.appendChild(heading);
+    const desc = document.createElement("p"); desc.style.cssText = "margin:0 0 12px; color:var(--muted); font-size:.9rem;"; desc.textContent = g.desc; psicoForm.appendChild(desc);
+    
+    g.items.forEach(it => {
+      psicoQuestionCount++;
+      const q = document.createElement("div"); q.className = "question";
+      const title = document.createElement("p"); title.className = "qtitle"; title.textContent = psicoQuestionCount + ". " + it[0]; q.appendChild(title);
+      const choices = document.createElement("div"); choices.className = "scale";
+      
+      psicoScale.forEach(([label, val]) => {
+        const lab = document.createElement("label"); lab.className = "choice";
+        const inp = document.createElement("input"); inp.type = "radio"; inp.name = "pq" + psicoQuestionCount; inp.value = val; inp.required = true;
+        inp.addEventListener("change", updatePsicoProgress);
+        const span = document.createElement("span"); span.textContent = label;
+        lab.append(inp, span); choices.appendChild(lab);
+      });
+      q.appendChild(choices); psicoForm.appendChild(q);
+    });
+  });
+  updatePsicoProgress();
+}
+
+function updatePsicoProgress() {
+  let answered = 0;
+  for (let n = 1; n <= psicoQuestionCount; n++) {
+    if (psicoForm.querySelector(`input[name="pq${n}"]:checked`)) answered++;
+  }
+  document.getElementById("psicoProgressText").textContent = answered + " de " + psicoQuestionCount + " respondidas";
+  document.getElementById("psicoProgressBar").style.width = (answered / psicoQuestionCount * 100) + "%";
+  document.getElementById("psicoStatus").textContent = answered === psicoQuestionCount 
+    ? "Cuestionario completo. Ya puedes generar el diagnóstico integrado." 
+    : "Faltan " + (psicoQuestionCount - answered) + " reactivos por responder.";
+}
+
+function band(v) {
+  if (v >= 4.3) return ["Alto", "Conductas favorables reportadas con frecuencia"];
+  if (v >= 3.5) return ["Medio-alto", "Tendencia favorable; conviene confirmar en entrevista"];
+  if (v >= 2.7) return ["Intermedio", "Resultados mixtos; profundizar en entrevista"];
+  if (v >= 2.0) return ["Bajo", "Área que requiere revisión y ejemplos concretos"];
+  return ["Muy bajo", "Señal de atención prioritaria para entrevista"];
+}
+
+document.getElementById("finishPsicoBtn").addEventListener("click", () => {
+  const missing = [];
+  for (let n = 1; n <= psicoQuestionCount; n++) {
+    if (!psicoForm.querySelector(`input[name="pq${n}"]:checked`)) missing.push(n);
+  }
+  if (missing.length) {
+    alert("Faltan " + missing.length + " reactivos por responder en el cuestionario de perfil.");
+    return;
+  }
+
+  const raw = [], scores = {}; let all = [], n = 0;
+  psicoGroups.forEach(g => {
+    let vals = [];
+    g.items.forEach(it => {
+      n++;
+      const original = Number(psicoForm.querySelector(`input[name="pq${n}"]:checked`).value);
+      raw.push(original);
+      const v = it[1] ? 6 - original : original;
+      vals.push(v); all.push(v);
+    });
+    scores[g.key] = vals.reduce((a,b) => a+b, 0) / vals.length;
+  });
+
+  const overall = all.reduce((a,b) => a+b, 0) / all.length;
+  const counts = [1,2,3,4,5].map(v => raw.filter(x => x === v).length);
+  const dominant = Math.max(...counts), dominantPct = dominant / psicoQuestionCount;
+  const sameAnswer = dominant === psicoQuestionCount;
+
+  const pairs = [[1,7],[2,8],[20,31],[25,32]];
+  const contradictions = pairs.filter(([a,b]) => Math.abs(raw[a-1] + raw[b-1] - 6) >= 3);
+  const uniform = dominantPct >= 0.75;
+  const consistencyConcern = contradictions.length >= 2;
+  const responseConcern = uniform || consistencyConcern || sameAnswer;
+
+  candidateData.position = document.getElementById("position").value;
+  candidateData.dc3 = document.getElementById("dc3_status").value;
+  candidateData.psicoScores = scores;
+  candidateData.psicoOverall = overall;
+  candidateData.psicoConcern = responseConcern;
+
+  let alerts = [];
+  if (sameAnswer) alerts.push("Todas las respuestas fueron idénticas. El perfil se considera no concluyente.");
+  else if (uniform) alerts.push("Concentración elevada en una sola opción ("+Math.round(dominantPct*100)+"%). Posible respuesta automática.");
+  if (contradictions.length) alerts.push("Se encontraron "+contradictions.length+" pares de respuestas poco consistentes.");
+  candidateData.psicoAlerts = alerts;
+
+  // Actualizar UI de Resultados Finales
+  document.getElementById("res_name").textContent = candidateData.name;
+  document.getElementById("res_phone").textContent = candidateData.phone;
+  document.getElementById("res_pos").textContent = candidateData.position;
+  document.getElementById("res_tech").textContent = `${candidateData.techScore}/10 (${candidateData.techPct}%) - APROBADO`;
+
+  document.getElementById("overall").textContent = responseConcern ? "No concluyente" : overall.toFixed(2) + " / 5";
+  
+  const metricBox = document.getElementById("metrics"); metricBox.innerHTML = "";
+  const labels = { habitos:"Hábitos y costumbres", liderazgo:"Liderazgo y equipo", compromiso:"Compromiso", responsabilidad:"Responsabilidad" };
+  
+  Object.keys(scores).forEach(k => {
+    const v = scores[k], b = band(v);
+    const el = document.createElement("div"); el.className = "metric";
+    el.innerHTML = "<strong>"+labels[k]+" · "+v.toFixed(2)+"/5</strong><div class='bar'><span style='width:"+((v-1)/4*100)+"%'></span></div><small>"+b[0]+" — "+b[1]+"</small>";
+    metricBox.appendChild(el);
+  });
+
+  const overallBand = band(overall);
+  document.getElementById("summary").textContent = responseConcern
+    ? "Perfil no concluyente. Existen patrones inconsistentes en las respuestas. Aclarar en entrevista."
+    : "Perfil general: " + overallBand[0] + ". " + overallBand[1];
+
+  document.getElementById("psicoResult").style.display = "block";
+  document.getElementById("psicoResult").scrollIntoView({ behavior: "smooth", block: "start" });
+  document.getElementById("finishPsicoBtn").disabled = true;
+
+  document.getElementById("pill-psico").classList.add("completed");
+  document.getElementById("pill-final").classList.add("active");
+});
+
+// -------------------------------------------------------------
+// ENVÍO DE DATOS INTEGRADOS A WHATSAPP
+// -------------------------------------------------------------
+document.getElementById("shareWhatsAppBtn").addEventListener("click", () => {
+  const labels = { habitos:"Hábitos laboral", liderazgo:"Liderazgo", compromiso:"Compromiso", responsabilidad:"Responsabilidad" };
+  const lines = [
+    "📌 EXPEDIENTE DE POSTULACIÓN - TELECOMUNICACIONES",
+    "--------------------------------------------------",
+    "👤 Candidato: " + candidateData.name,
+    "📞 Teléfono: " + candidateData.phone,
+    "💼 Puesto al que aspira: " + candidateData.position,
+    "📜 Estado DC-3: " + candidateData.dc3,
+    "",
+    "📝 1. EVALUACIÓN TÉCNICA (FOA)",
+    "• Calificación: " + candidateData.techScore + "/10 (" + candidateData.techPct + "%)",
+    "• Estado: " + (candidateData.techPassed ? "APROBADO ✅" : "NO APROBADO ❌"),
+    "",
+    "🧠 2. PERFIL LABORAL Y CONDUCTA",
+    "• Promedio General: " + (candidateData.psicoConcern ? "NO CONCLUYENTE ⚠️" : candidateData.psicoOverall.toFixed(2) + "/5")
+  ];
+
+  Object.keys(candidateData.psicoScores).forEach(k => {
+    lines.push("• " + labels[k] + ": " + candidateData.psicoScores[k].toFixed(2) + "/5");
+  });
+
+  if (candidateData.psicoAlerts.length) {
+    lines.push("", "⚠️ ALERTAS DE CONSISTENCIA:");
+    candidateData.psicoAlerts.forEach(a => lines.push(" - " + a));
+  }
+
+  lines.push("", "--------------------------------------------------", "Enviado desde el Portal de Reclutamiento FILIAL.");
+  
+  const text = encodeURIComponent(lines.join("\n"));
+  window.open("https://api.whatsapp.com/send?phone=525658327897&text=" + text, "_blank");
+});
+
+// INICIALIZACIÓN
+renderQuiz();
+renderPsico();
+</script>
+</body>
+</html>
